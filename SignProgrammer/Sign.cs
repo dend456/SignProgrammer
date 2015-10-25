@@ -3,6 +3,7 @@ using System.Text;
 using System.IO.Ports;
 using System.Collections.Generic;
 using System.Threading;
+using System.IO;
 
 namespace SignProgrammer
 {
@@ -59,28 +60,32 @@ namespace SignProgrammer
                             switch (eff.Type)
                             {
                                 case SignEffect.SignEffectType.Graphic:
-                                {
-                                    Graphic g = eff as Graphic;
-                                    graphics.Add(g);
-                                    msg = msg.Replace(sub, string.Format("<G{0}>", currentGraphic));
-                                    currentGraphic = (char)((int)currentGraphic + 1);
-                                    break;
-                                }
+                                    {
+                                        Graphic g = eff as Graphic;
+                                        graphics.Add(g);
+                                        msg = msg.Replace(sub, string.Format("<B{0}>", currentGraphic));
+                                        currentGraphic = (char)((int)currentGraphic + 1);
+                                        break;
+                                    }
                                 case SignEffect.SignEffectType.Font:
                                 case SignEffect.SignEffectType.Color:
                                 case SignEffect.SignEffectType.Transition:
                                 case SignEffect.SignEffectType.Special:
-                                {
-                                    msg = msg.Replace(sub, eff.MessageText);
-                                    currentIndex = currentIndex + eff.MessageText.Length;
-                                    break;
-                                }
+                                    {
+                                        msg = msg.Replace(sub, eff.MessageText);
+                                        currentIndex = currentIndex + eff.MessageText.Length;
+                                        break;
+                                    }
                             }
                         }
                         else
                         {
                             ++currentIndex;
                         }
+                    }
+                    else
+                    {
+                        ++currentIndex;
                     }
                 }
             }
@@ -89,19 +94,18 @@ namespace SignProgrammer
             {
                 string.Format("<ID{0}><P{1}>{2}", Id, page, msg)
             };
-
             for (int i = 0; i < graphics.Count; ++i)
             {
                 lines.Add(string.Format("<ID{0}><G{1}>{2}", Id, (char)('A' + i), graphics[i].Data)); 
             }
 
-            lines.Add(string.Format(string.Format("<ID{0}><RP{1}\r\n\r\n", Id, page)));
+            lines.Add(string.Format(string.Format("<ID{0}><RP{1}>\r\n\r\n", Id, page)));
             return string.Join("\r\n", lines);
         }
 
         public void SendMessage(string msg, string page = "A")
         {
-            msg = ParseMessage(msg);
+            msg = ParseMessage(msg, page);
             Console.WriteLine(msg);
             SendBytes(Encoding.ASCII.GetBytes(msg));
         }
@@ -166,7 +170,35 @@ namespace SignProgrammer
                 new SignEffect("Lime/Red/Black","{lime/red/black}","<CX>",SignEffect.SignEffectType.Color)
             };
 
-            
+            effects.AddRange(LoadGraphics());
+
+            return effects;
+        }
+
+        private static List<SignEffect> LoadGraphics()
+        {
+            var effects = new List<SignEffect>();
+            string[] files;
+            try
+            {
+                files = Directory.GetFiles(".\\graphics");
+            }
+            catch (Exception e)
+            {
+                return effects;
+            }
+
+            foreach (var f in files)
+            {
+                try
+                {
+                    effects.Add(Graphic.LoadFromFile(f));
+                }
+                catch (Exception e)
+                {
+                }
+            }
+
             return effects;
         }
 

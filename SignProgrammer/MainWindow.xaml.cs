@@ -84,7 +84,8 @@ namespace SignProgrammer
         {
             if (!string.IsNullOrEmpty(textBox.Text))
             {
-                sign.SendMessage(textBox.Text);
+                string page = pageBox.SelectedValue.ToString();
+                sign.SendMessage(textBox.Text, page);
             }
         }
         

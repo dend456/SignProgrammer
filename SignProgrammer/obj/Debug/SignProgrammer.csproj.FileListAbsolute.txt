@@ -12,3 +12,5 @@ c:\users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer
 c:\users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer\obj\Debug\SignProgrammer.csproj.GenerateResource.Cache
 c:\users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer\obj\Debug\SignProgrammer.exe
 c:\users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer\obj\Debug\SignProgrammer.pdb
+C:\Users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer\obj\Debug\GraphicEditor.g.cs
+C:\Users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer\obj\Debug\GraphicEditor.baml

@@ -55,9 +55,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GraphicEditor.xaml.cs">
+      <DependentUpon>GraphicEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SignEffect.cs" />
     <Compile Include="Graphic.cs" />
     <Compile Include="Sign.cs" />
+    <Page Include="GraphicEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

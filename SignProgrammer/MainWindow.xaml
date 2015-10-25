@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <Menu x:Name="menu" HorizontalAlignment="Left" VerticalAlignment="Top" Width="517" IsMainMenu="True">
+        <Menu x:Name="menu" VerticalAlignment="Top" IsMainMenu="True">
             <MenuItem Header="_File" />
             <MenuItem Header="F_ont" Name="fontMenu"/>
             <MenuItem Header="_Transition" Name="transitionMenu"/>
@@ -17,8 +17,37 @@
         </Menu>
         <Label x:Name="label" Content="Speed" Margin="0,35,110,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="43"/>
         <Slider x:Name="speedSlider" Margin="0,38,10,0" VerticalAlignment="Top" Maximum="25" SmallChange="2" Value="25" HorizontalAlignment="Right" Width="95" TickPlacement="BottomRight" ValueChanged="speedSlider_ValueChanged" TickFrequency="2" Delay="1000"/>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="432,288,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+        <Button x:Name="button" Content="Button" Margin="0,0,10,10" Click="button_Click" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
         <TextBox x:Name="textBox" Height="126" Margin="10,66,10,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" AcceptsReturn="True" AcceptsTab="True" SpellCheck.IsEnabled="True"/>
+        <Label x:Name="label1" Content="Page:" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="43"/>
+        <ComboBox x:Name="pageBox" SelectedValuePath="Content" HorizontalAlignment="Left" Margin="53,37,0,0" VerticalAlignment="Top" Width="36" SelectedIndex="0">
+            <ComboBoxItem>A</ComboBoxItem>
+            <ComboBoxItem>B</ComboBoxItem>
+            <ComboBoxItem>C</ComboBoxItem>
+            <ComboBoxItem>D</ComboBoxItem>
+            <ComboBoxItem>E</ComboBoxItem>
+            <ComboBoxItem>F</ComboBoxItem>
+            <ComboBoxItem>G</ComboBoxItem>
+            <ComboBoxItem>H</ComboBoxItem>
+            <ComboBoxItem>I</ComboBoxItem>
+            <ComboBoxItem>J</ComboBoxItem>
+            <ComboBoxItem>K</ComboBoxItem>
+            <ComboBoxItem>L</ComboBoxItem>
+            <ComboBoxItem>M</ComboBoxItem>
+            <ComboBoxItem>N</ComboBoxItem>
+            <ComboBoxItem>O</ComboBoxItem>
+            <ComboBoxItem>P</ComboBoxItem>
+            <ComboBoxItem>Q</ComboBoxItem>
+            <ComboBoxItem>R</ComboBoxItem>
+            <ComboBoxItem>S</ComboBoxItem>
+            <ComboBoxItem>T</ComboBoxItem>
+            <ComboBoxItem>U</ComboBoxItem>
+            <ComboBoxItem>V</ComboBoxItem>
+            <ComboBoxItem>W</ComboBoxItem>
+            <ComboBoxItem>X</ComboBoxItem>
+            <ComboBoxItem>Y</ComboBoxItem>
+            <ComboBoxItem>Z</ComboBoxItem>
+        </ComboBox>
 
 
 
