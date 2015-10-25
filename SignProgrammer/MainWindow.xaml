@@ -9,17 +9,18 @@
     <Grid>
         <Menu x:Name="menu" HorizontalAlignment="Left" VerticalAlignment="Top" Width="517" IsMainMenu="True">
             <MenuItem Header="_File" />
-            <MenuItem Header="F_ont" />
-            <MenuItem Header="_Transition" />
-            <MenuItem Header="_Color" />
-            <MenuItem Header="_Graphic" />
-            <MenuItem Header="_Special" />
+            <MenuItem Header="F_ont" Name="fontMenu"/>
+            <MenuItem Header="_Transition" Name="transitionMenu"/>
+            <MenuItem Header="_Color" Name="colorMenu"/>
+            <MenuItem Header="_Graphic" Name="graphicMenu"/>
+            <MenuItem Header="_Special" Name="specialMenu"/>
         </Menu>
         <Label x:Name="label" Content="Speed" Margin="0,35,110,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="43"/>
         <Slider x:Name="speedSlider" Margin="0,38,10,0" VerticalAlignment="Top" Maximum="25" SmallChange="2" Value="25" HorizontalAlignment="Right" Width="95" TickPlacement="BottomRight" ValueChanged="speedSlider_ValueChanged" TickFrequency="2" Delay="1000"/>
-        <TextBox x:Name="textBox" Height="124" Margin="10,66,10,0" TextWrapping="Wrap" VerticalAlignment="Top" SpellCheck.IsEnabled="True" AcceptsReturn="True" AcceptsTab="True"/>
         <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="432,288,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-        
+        <TextBox x:Name="textBox" Height="126" Margin="10,66,10,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" AcceptsReturn="True" AcceptsTab="True" SpellCheck.IsEnabled="True"/>
+
+
 
     </Grid>
 </Window>
