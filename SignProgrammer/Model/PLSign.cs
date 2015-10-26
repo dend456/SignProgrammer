@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Text;
-using System.IO.Ports;
 using System.Collections.Generic;
-using System.Threading;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Media;
 
-namespace SignProgrammer
+namespace SignProgrammer.Model
 {
-    public class Sign
+    public class PLSign : SerialSign
     {
         /*  <?[A-Z]> commands
         ? =
@@ -17,33 +18,15 @@ namespace SignProgrammer
         S - ??
         */
 
-        public string Id { get; set; } = "01";
-        public String Port { get; set; } = "COM4";
-        public int Baud { get; set; } = 9600;
-        public Parity Parity { get; set; } = Parity.None;
-        public int DataBits { get; set; } = 8;
-        public StopBits StopBits { get; set; } = StopBits.One;
-
-        private static List<SignEffect> effects;
-        public static List<SignEffect> Effects
-        {
-            get
-            {
-                if (effects == null)
-                {
-                    effects = LoadEffects();
-                }
-                return effects;
-            }
-        }
-
-        private string ParseMessage(string msg, string page = "A")
+        
+        
+        protected override string ParseMessage(string msg, string page)
         {
             int currentIndex = 0;
             char currentGraphic = 'A';
             var graphics = new List<Graphic>();
 
-            msg = msg.Trim().Replace("\r\n", " ");
+            msg = msg.Replace("\r\n", " ");
 
             while (currentIndex >= 0 && currentIndex < msg.Length)
             {
@@ -54,7 +37,15 @@ namespace SignProgrammer
                     if (endIndex >= 0)
                     {
                         string sub = msg.Substring(currentIndex, endIndex - currentIndex + 1);
-                        SignEffect eff = effects.Find(e => e.Text == sub);
+                        SignEffect eff = null;
+                        foreach (var kv in Effects)
+                        {
+                            eff = kv.Value.Find(e => e.Text == sub);
+                            if (eff != null)
+                            {
+                                break;
+                            }
+                        }
                         if (eff != null)
                         {
                             switch (eff.Type)
@@ -96,47 +87,44 @@ namespace SignProgrammer
             };
             for (int i = 0; i < graphics.Count; ++i)
             {
-                lines.Add(string.Format("<ID{0}><G{1}>{2}", Id, (char)('A' + i), graphics[i].Data)); 
+                lines.Add(string.Format("<ID{0}><G{1}>{2}", Id, (char)('A' + i), graphics[i].Data));
             }
 
             lines.Add(string.Format(string.Format("<ID{0}><RP{1}>\r\n\r\n", Id, page)));
             return string.Join("\r\n", lines);
         }
 
-        public void SendMessage(string msg, string page = "A")
-        {
-            msg = ParseMessage(msg, page);
-            Console.WriteLine(msg);
-            SendBytes(Encoding.ASCII.GetBytes(msg));
-        }
-
-        public void SetSpeed(int speed)
+        public override bool SetSpeed(int speed)
         {
             speed = Math.Min(25, speed);
             speed = -Math.Max(0, speed);
             speed += 'Z';
             string msg = string.Format("<ID01><SPD{0}>\r\n", (char)speed);
-            SendBytes(Encoding.ASCII.GetBytes(msg));
+            return SendBytes(Encoding.ASCII.GetBytes(msg));
         }
 
-        public void SendBytes(byte[] bytes)
+        public override void AddGraphic(Graphic g)
         {
-            SerialPort ser = new SerialPort(Port, Baud, Parity, DataBits, StopBits);
-            ser.Open();
-
-            //write 1 byte at a time and sleep or sign won't be able to keep up
-            for (int i=0; i < bytes.Length; ++i)
-            {
-                ser.Write(bytes, i, 1);
-                Thread.Sleep(15);
-            }
-            ser.Close();
+            Effects["Graphic"].Add(g);
         }
 
-        public static List<SignEffect> LoadEffects()
+        protected override Dictionary<string, List<SignEffect>> LoadEffects()
+        {
+            return new Dictionary<string, List<SignEffect>>()
+            {
+                { "Color", LoadColors() },
+                { "Graphic", LoadGraphics() },
+                { "Font", LoadFont() },
+                { "Special", LoadSpecial() },
+                { "Transition", LoadTransition() }
+            };
+        }
+
+        #region Effect_Loading
+        private static List<SignEffect> LoadColors()
         {
             List<SignEffect> effects = new List<SignEffect>()
-            { 
+            {
                 new SignEffect("Dim Red","{d-red}","<CA>",SignEffect.SignEffectType.Color),
                 new SignEffect("Dim Lime","{d-lime}","<CJ>",SignEffect.SignEffectType.Color),
 
@@ -155,10 +143,10 @@ namespace SignProgrammer
                 new SignEffect("Bright Yellow","{b-yellow}","<CH>",SignEffect.SignEffectType.Color),
                 new SignEffect("Bright Lime","{b-lime}","<CK>",SignEffect.SignEffectType.Color),
                 new SignEffect("Bright Green","{b-green}","<CL>",SignEffect.SignEffectType.Color),
-                
+
                 new SignEffect("Green/Red","{green/red}","<CU>",SignEffect.SignEffectType.Color),
                 new SignEffect("Red/Green","{red/green}","<CV>",SignEffect.SignEffectType.Color),
-                
+
                 new SignEffect("Yellow/Green/Red","{yellow/green/red}","<CO>",SignEffect.SignEffectType.Color),
                 new SignEffect("Red/Black/Green","{red/black/green}","<CQ>",SignEffect.SignEffectType.Color),
                 new SignEffect("Red/Black/Yellow","{red/black/yellow}","<CR>",SignEffect.SignEffectType.Color),
@@ -170,11 +158,32 @@ namespace SignProgrammer
                 new SignEffect("Lime/Red/Black","{lime/red/black}","<CX>",SignEffect.SignEffectType.Color)
             };
 
-            effects.AddRange(LoadGraphics());
+            return effects;
+        }
+        private static List<SignEffect> LoadTransition()
+        {
+            List<SignEffect> effects = new List<SignEffect>()
+            {
+            };
 
             return effects;
         }
+        private static List<SignEffect> LoadSpecial()
+        {
+            List<SignEffect> effects = new List<SignEffect>()
+            {
+            };
 
+            return effects;
+        }
+        private static List<SignEffect> LoadFont()
+        {
+            List<SignEffect> effects = new List<SignEffect>()
+            {
+            };
+
+            return effects;
+        }
         private static List<SignEffect> LoadGraphics()
         {
             var effects = new List<SignEffect>();
@@ -201,25 +210,6 @@ namespace SignProgrammer
 
             return effects;
         }
-
-        public static List<string> OpenComPorts()
-        {
-            List<string> open = new List<string>();
-            SerialPort port;
-            for (int i = 0; i < 256; ++i)
-            {
-                try
-                {
-                    string portName = "COM" + i.ToString();
-                    port = new SerialPort(portName);
-                    port.Open();
-                    port.Close();
-                    open.Add(portName);
-                }
-                catch (Exception)
-                {}
-            }
-            return open;
-        }
+        #endregion
     }
 }

@@ -4,21 +4,35 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SignProgrammer"
+        xmlns:vm="clr-namespace:SignProgrammer.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Signer" Height="350" Width="525">
+    <Window.DataContext>
+        <vm:MainWindowVM />
+    </Window.DataContext>
     <Grid>
-        <Menu x:Name="menu" VerticalAlignment="Top" IsMainMenu="True">
+        <Menu VerticalAlignment="Top" IsMainMenu="True">
             <MenuItem Header="_File" />
             <MenuItem Header="F_ont" Name="fontMenu"/>
             <MenuItem Header="_Transition" Name="transitionMenu"/>
             <MenuItem Header="_Color" Name="colorMenu"/>
-            <MenuItem Header="_Graphic" Name="graphicMenu"/>
+            <MenuItem ItemsSource="{Binding Path=CurrentSign.Effects[Graphic]}" Header="_Graphic" Name="graphicMenu">
+                <MenuItem.Resources>
+                    <Image x:Key="iconKey" x:Shared="false" Margin="-10,0,0,0" Width="36" Height="14" Source="{Binding Path=Thumbnail}"/>
+                </MenuItem.Resources>
+                <MenuItem.ItemContainerStyle>
+                    <Style TargetType="MenuItem">
+                        <Setter Property="Icon" Value="{StaticResource iconKey}" />
+                        <Setter Property="Header" Value="{Binding Path=MenuText}" />
+                    </Style>
+                </MenuItem.ItemContainerStyle>
+            </MenuItem>
             <MenuItem Header="_Special" Name="specialMenu"/>
         </Menu>
         <Label x:Name="label" Content="Speed" Margin="0,35,110,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="43"/>
-        <Slider x:Name="speedSlider" Margin="0,38,10,0" VerticalAlignment="Top" Maximum="25" SmallChange="2" Value="25" HorizontalAlignment="Right" Width="95" TickPlacement="BottomRight" ValueChanged="speedSlider_ValueChanged" TickFrequency="2" Delay="1000"/>
-        <Button x:Name="button" Content="Button" Margin="0,0,10,10" Click="button_Click" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
-        <TextBox x:Name="textBox" Height="126" Margin="10,66,10,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" AcceptsReturn="True" AcceptsTab="True" SpellCheck.IsEnabled="True"/>
+        <Slider x:Name="speedSlider" Value="{Binding Path=CurrentSpeed}" Margin="0,38,10,0" VerticalAlignment="Top" Maximum="25" SmallChange="2" HorizontalAlignment="Right" Width="95" TickPlacement="BottomRight" TickFrequency="2" IsHitTestVisible="True" IsSnapToTickEnabled="True"/>
+        <Button x:Name="button" Content="Button" Margin="0,0,10,10" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
+        <TextBox x:Name="textBox" Text="{Binding Path=MessageText}" Height="126" Margin="10,66,10,0" TextWrapping="Wrap" VerticalAlignment="Top" AcceptsReturn="True" AcceptsTab="True" SpellCheck.IsEnabled="True" />
         <Label x:Name="label1" Content="Page:" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="43"/>
         <ComboBox x:Name="pageBox" SelectedValuePath="Content" HorizontalAlignment="Left" Margin="53,37,0,0" VerticalAlignment="Top" Width="36" SelectedIndex="0">
             <ComboBoxItem>A</ComboBoxItem>

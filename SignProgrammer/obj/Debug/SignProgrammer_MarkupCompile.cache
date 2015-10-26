@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer\App.xaml
-2-130017685
+3-1930556884
 
-91499900407
-13738642453
-GraphicEditor.xaml;MainWindow.xaml;
+13677863665
+14-1001767708
+View\GraphicEditor.xaml;View\GraphicEditorControl.xaml;View\MainWindow.xaml;
 
 False
 

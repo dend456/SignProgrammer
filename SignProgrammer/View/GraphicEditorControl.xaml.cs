@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace SignProgrammer
 {
     /// <summary>
-    /// Interaction logic for GraphicEditor.xaml
+    /// Interaction logic for GraphicEditorControl.xaml
     /// </summary>
-    public partial class GraphicEditor : Window
+    public partial class GraphicEditorControl : UserControl
     {
-        public GraphicEditor()
+        public GraphicEditorControl()
         {
             InitializeComponent();
         }

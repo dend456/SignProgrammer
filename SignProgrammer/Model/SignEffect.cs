@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace SignProgrammer
+namespace SignProgrammer.Model
 {
     public class SignEffect
     {
@@ -23,7 +23,7 @@ namespace SignProgrammer
         public string Text { get; protected set; }
         public string MenuText { get; protected set; }
         public string MessageText { get; protected set; }
-        public SignEffectType Type { get; protected set; }
+        public SignEffectType Type { get; private set; }
         
         public SignEffect(string menuText, string text, string messageText, SignEffectType type)
         {
