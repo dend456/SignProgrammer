@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SignProgrammer
+namespace SignProgrammer.View
 {
     /// <summary>
     /// Interaction logic for GraphicEditorControl.xaml

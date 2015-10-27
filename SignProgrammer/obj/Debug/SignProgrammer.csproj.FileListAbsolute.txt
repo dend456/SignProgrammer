@@ -17,3 +17,16 @@ C:\Users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer
 C:\Users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer\obj\Debug\View\GraphicEditorControl.baml
 C:\Users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer\obj\Debug\View\MainWindow.baml
 C:\Users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer\obj\Debug\SignProgrammer.csprojResolveAssemblyReference.cache
+C:\Users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer\bin\Debug\GalaSoft.MvvmLight.dll
+C:\Users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer\bin\Debug\GalaSoft.MvvmLight.Extras.dll
+C:\Users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer\bin\Debug\GalaSoft.MvvmLight.Platform.dll
+C:\Users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+C:\Users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer\bin\Debug\System.Windows.Interactivity.dll
+C:\Users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer\bin\Debug\GalaSoft.MvvmLight.pdb
+C:\Users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer\bin\Debug\GalaSoft.MvvmLight.xml
+C:\Users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer\bin\Debug\GalaSoft.MvvmLight.Extras.pdb
+C:\Users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer\bin\Debug\GalaSoft.MvvmLight.Extras.xml
+C:\Users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer\bin\Debug\GalaSoft.MvvmLight.Platform.pdb
+C:\Users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer\bin\Debug\GalaSoft.MvvmLight.Platform.xml
+C:\Users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
+C:\Users\dan\documents\visual studio 2015\Projects\SignProgrammer\SignProgrammer\bin\Debug\Microsoft.Practices.ServiceLocation.xml

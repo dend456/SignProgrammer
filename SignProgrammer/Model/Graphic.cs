@@ -12,14 +12,14 @@ namespace SignProgrammer.Model
         public const int WIDTH = 18;
         public const int HEIGHT = 7;
 
-        private static readonly Dictionary<char, System.Drawing.Color> colors = new Dictionary<char, System.Drawing.Color>()
+        private static readonly Dictionary<char, System.Windows.Media.Color> colors = new Dictionary<char, System.Windows.Media.Color>()
         {
-            { 'B', System.Drawing.Color.DarkGray },
-            { 'G', System.Drawing.Color.Green },
-            { 'R', System.Drawing.Color.Red },
-            { 'Y', System.Drawing.Color.Orange }
+            { 'B', Colors.Black },
+            { 'G', Colors.Green },
+            { 'R', Colors.Red },
+            { 'Y', Colors.Orange }
         };
-        public Dictionary<char, System.Drawing.Color> ValidColors { get { return colors; } }
+        public Dictionary<char, System.Windows.Media.Color> ValidColors { get { return colors; } }
 
         private string data;
         public string Data 
@@ -38,14 +38,32 @@ namespace SignProgrammer.Model
             } 
         }
 
-        //public BitmapImage Thumbnail { get; set; }
+        public System.Windows.Media.Color[][] PixelData
+        {
+            get
+            {
+                var rows = new System.Windows.Media.Color[HEIGHT][];
+                int index = 0;
+                for (int y = 0; y < HEIGHT; ++y)
+                {
+                    var l = new System.Windows.Media.Color[WIDTH];
+                    for (int x = 0; x < WIDTH; ++x)
+                    {
+                        l[x] = colors[data[index++]];
+                    }
+                    rows[y] = l;
+                }
+                return rows;
+            }
+        }
+        
         public ImageSource Thumbnail { get; set; }
         public string FilePath { get; set; }
         public string FileName
         {
             get
             {
-                return Path.GetFileName(FilePath);
+                return Path.GetFileNameWithoutExtension(FilePath);
             }
         }
 

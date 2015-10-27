@@ -1,26 +1,15 @@
-﻿using SignProgrammer.Model;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
+using SignProgrammer.Model;
+using SignProgrammer.View;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace SignProgrammer.ViewModel
 {
 
-    public class MainWindowVM : INotifyPropertyChanged
+    public class MainWindowVM : ViewModelBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
         public Sign CurrentSign { get; set; } = new PLSign();
 
         private string msg = "";
@@ -30,14 +19,55 @@ namespace SignProgrammer.ViewModel
             set 
             { 
                 msg = value;
-                NotifyPropertyChanged("");
-                Console.WriteLine(value); 
+                RaisePropertyChanged("");
+            } 
+        }
+
+        private int currentSpeed = 25;
+        public int CurrentSpeed 
+        { 
+            get
+            {
+                return currentSpeed;
+            } 
+            set
+            {
+                currentSpeed = value;
+                CurrentSign.SetSpeed(value);
             } 
         }
 
         public string SelectedPage { get; set; } = "A";
-        public int CurrentSpeed { get; set; } = 25;
+        public ICommand EffectCommand { get; private set; }
+        public ICommand SendMessageCommand { get; private set; }
+        public ICommand NewGraphicCommand { get; private set; }
 
+        public MainWindow Window { get; set; }
 
+        public MainWindowVM()
+        {
+            EffectCommand = new RelayCommand<SignEffect>(s =>
+            {
+                int oldIndex = Window.MessageBoxCaretIndex;
+                MessageText = MessageText.Insert(oldIndex, s.Text);
+                Window.MessageBoxCaretIndex = oldIndex + s.Text.Length;
+            });
+
+            SendMessageCommand = new RelayCommand(() =>
+            {
+                if (!string.IsNullOrEmpty(msg))
+                {
+                    CurrentSign.SendMessage(msg, SelectedPage);
+                }
+            });
+
+            NewGraphicCommand = new RelayCommand(() =>
+            {
+                GraphicEditor window = new GraphicEditor();
+                GraphicEditorVM vm = window.DataContext as GraphicEditorVM;
+                vm.CurrentSign = CurrentSign;
+                window.Show();
+            });
+        }
     }
 }

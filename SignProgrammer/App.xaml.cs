@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SignProgrammer.View;
+using SignProgrammer.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -17,6 +19,8 @@ namespace SignProgrammer
         {
             base.OnStartup(e);
             MainWindow window = new MainWindow();
+            MainWindowVM vm = window.DataContext as MainWindowVM;
+            vm.Window = window;
             window.Show();
         }
     }

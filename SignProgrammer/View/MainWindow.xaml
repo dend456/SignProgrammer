@@ -1,4 +1,4 @@
-﻿<Window x:Class="SignProgrammer.MainWindow"
+﻿<Window x:Class="SignProgrammer.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -12,10 +12,19 @@
     </Window.DataContext>
     <Grid>
         <Menu VerticalAlignment="Top" IsMainMenu="True">
-            <MenuItem Header="_File" />
             <MenuItem Header="F_ont" Name="fontMenu"/>
             <MenuItem Header="_Transition" Name="transitionMenu"/>
-            <MenuItem Header="_Color" Name="colorMenu"/>
+            <MenuItem ItemsSource="{Binding Path=CurrentSign.Effects[Color]}" Header="_Color" Name="colorMenu">
+                <MenuItem.ItemContainerStyle>
+                    <Style TargetType="MenuItem">
+                        <Setter Property="Header" Value="{Binding Path=MenuText}" />
+                        <Setter Property="Command"  
+                                Value="{Binding DataContext.EffectCommand, RelativeSource={RelativeSource Mode=FindAncestor, 
+                                AncestorType={x:Type MenuItem}, AncestorLevel=1}}" />
+                        <Setter Property="CommandParameter" Value="{Binding}" />
+                    </Style>
+                </MenuItem.ItemContainerStyle>
+            </MenuItem>
             <MenuItem ItemsSource="{Binding Path=CurrentSign.Effects[Graphic]}" Header="_Graphic" Name="graphicMenu">
                 <MenuItem.Resources>
                     <Image x:Key="iconKey" x:Shared="false" Margin="-10,0,0,0" Width="36" Height="14" Source="{Binding Path=Thumbnail}"/>
@@ -24,17 +33,21 @@
                     <Style TargetType="MenuItem">
                         <Setter Property="Icon" Value="{StaticResource iconKey}" />
                         <Setter Property="Header" Value="{Binding Path=MenuText}" />
+                        <Setter Property="Command"  
+                            Value="{Binding DataContext.EffectCommand, RelativeSource={RelativeSource Mode=FindAncestor, 
+                            AncestorType={x:Type MenuItem}, AncestorLevel=1}}" />
+                        <Setter Property="CommandParameter" Value="{Binding}" />
                     </Style>
                 </MenuItem.ItemContainerStyle>
             </MenuItem>
             <MenuItem Header="_Special" Name="specialMenu"/>
         </Menu>
-        <Label x:Name="label" Content="Speed" Margin="0,35,110,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="43"/>
-        <Slider x:Name="speedSlider" Value="{Binding Path=CurrentSpeed}" Margin="0,38,10,0" VerticalAlignment="Top" Maximum="25" SmallChange="2" HorizontalAlignment="Right" Width="95" TickPlacement="BottomRight" TickFrequency="2" IsHitTestVisible="True" IsSnapToTickEnabled="True"/>
-        <Button x:Name="button" Content="Button" Margin="0,0,10,10" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
-        <TextBox x:Name="textBox" Text="{Binding Path=MessageText}" Height="126" Margin="10,66,10,0" TextWrapping="Wrap" VerticalAlignment="Top" AcceptsReturn="True" AcceptsTab="True" SpellCheck.IsEnabled="True" />
-        <Label x:Name="label1" Content="Page:" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="43"/>
-        <ComboBox x:Name="pageBox" SelectedValuePath="Content" HorizontalAlignment="Left" Margin="53,37,0,0" VerticalAlignment="Top" Width="36" SelectedIndex="0">
+        <Label x:Name="label" Content="Speed" Margin="0,71,110,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="43"/>
+        <Slider x:Name="speedSlider" Value="{Binding Path=CurrentSpeed}" Margin="0,74,10,0" VerticalAlignment="Top" Maximum="25" SmallChange="5" HorizontalAlignment="Right" Width="95" TickPlacement="BottomRight" TickFrequency="5" IsHitTestVisible="True" IsSnapToTickEnabled="True" LargeChange="5"/>
+        <Button x:Name="sendButton" Command="{Binding SendMessageCommand}" Content="Send" Margin="0,0,10,10" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" />
+        <TextBox x:Name="messageBox" Text="{Binding Path=MessageText, UpdateSourceTrigger=PropertyChanged}" Height="126" Margin="10,100,10,0" TextWrapping="Wrap" VerticalAlignment="Top" AcceptsReturn="True" AcceptsTab="True" SpellCheck.IsEnabled="True" />
+        <Label x:Name="label1" Content="Page:" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Width="43"/>
+        <ComboBox SelectedValue="{Binding Path=SelectedPage}" SelectedValuePath="Content" HorizontalAlignment="Left" Margin="53,73,0,0" VerticalAlignment="Top" Width="36" SelectedIndex="0">
             <ComboBoxItem>A</ComboBoxItem>
             <ComboBoxItem>B</ComboBoxItem>
             <ComboBoxItem>C</ComboBoxItem>
@@ -62,8 +75,10 @@
             <ComboBoxItem>Y</ComboBoxItem>
             <ComboBoxItem>Z</ComboBoxItem>
         </ComboBox>
-
-
-
+        <ToolBarTray Height="32" Margin="0,21,0,0" VerticalAlignment="Top">
+            <ToolBar Margin="0,0,-517,-32">
+                <Button Content="G+" Command="{Binding NewGraphicCommand}"/>
+            </ToolBar>
+        </ToolBarTray>
     </Grid>
 </Window>
