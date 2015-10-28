@@ -34,7 +34,24 @@ namespace SignProgrammer.Model
                 {
                     throw new FormatException("Graphic data is not the correct size. Must be 18x7.");
                 }
-                data = value;
+                data = value; 
+                byte[] imageData = new byte[WIDTH * HEIGHT * 3];
+                int pixelIndex = 0;
+                int dataIndex = 0;
+                for (int y = 0; y < HEIGHT; ++y)
+                {
+                    for (int x = 0; x < WIDTH; ++x)
+                    {
+                        imageData[pixelIndex++] = colors[data[dataIndex]].R;
+                        imageData[pixelIndex++] = colors[data[dataIndex]].G;
+                        imageData[pixelIndex++] = colors[data[dataIndex]].B;
+                        ++dataIndex;
+                    }
+                }
+                PixelFormat pf = PixelFormats.Rgb24;
+                BitmapSource bms = BitmapSource.Create(WIDTH, HEIGHT, 96.0, 96.0, pf, null, imageData, WIDTH * 3);
+
+                Thumbnail = bms;
             } 
         }
 
@@ -65,6 +82,12 @@ namespace SignProgrammer.Model
             {
                 return Path.GetFileNameWithoutExtension(FilePath);
             }
+            set
+            {
+                FilePath = string.Format(@".\graphics\{0}.txt", value);
+                MenuText = value;
+                Text = string.Format("{{G:{0}}}", value);
+            }
         }
 
         public Graphic(string name, string displayText, string path, string data) : base(name, displayText, null, SignEffectType.Graphic)
@@ -75,32 +98,13 @@ namespace SignProgrammer.Model
             }
             FilePath = path;
             Data = data;
-
-            byte[] imageData = new byte[WIDTH * HEIGHT * 3];
-            int pixelIndex = 0;
-            int dataIndex = 0;
-            for (int y = 0; y < HEIGHT; ++y)
-            {
-                for (int x = 0; x < WIDTH; ++x)
-                {
-                    imageData[pixelIndex++] = colors[data[dataIndex]].R;
-                    imageData[pixelIndex++] = colors[data[dataIndex]].G;
-                    imageData[pixelIndex++] = colors[data[dataIndex]].B;
-                    ++dataIndex;
-                }
-            }
-            PixelFormat pf = PixelFormats.Rgb24;
-            BitmapSource bms = BitmapSource.Create(WIDTH, HEIGHT, 96.0, 96.0, pf, null, imageData, WIDTH * 3);
-            
-            Thumbnail = bms;
-
         }
 
-        public Graphic() : this("tmp", "{G:tmp}", @".\graphics\tmp.txt", new string('B', 126))
+        public Graphic() : this("", "", "", new string('B', 126))
         {
         }
 
-        public bool Save(string path)
+        public bool Save()
         {
             var lines = new List<string>(){ MenuText, Text };
             for (int i = 0; i < HEIGHT * WIDTH; i += WIDTH)
@@ -110,7 +114,7 @@ namespace SignProgrammer.Model
 
             try
             {
-                File.WriteAllLines(path, lines);
+                File.WriteAllLines(FilePath, lines);
             }
             catch (Exception)
             {

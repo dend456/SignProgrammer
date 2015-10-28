@@ -8,17 +8,26 @@
         xmlns:vm="clr-namespace:SignProgrammer.ViewModel"
         xmlns:media="clr-namespace:System.Windows.Media;assembly=PresentationFramework"
         mc:Ignorable="d"
-        Title="Graphics Editor" Height="300" Width="800">
+        Title="Graphics Editor" Height="300" Width="850
+        ">
     <Window.DataContext>
         <vm:GraphicEditorVM />
     </Window.DataContext>
     <Window.Resources>
         <DataTemplate x:Key="pixelTemplate">
-            <Rectangle Margin=".5,.5,.5,.5">
-                <Rectangle.Fill>
-                    <SolidColorBrush Color="{Binding}" />
-                </Rectangle.Fill>
-            </Rectangle>
+            <Button Command="{Binding DataContext.PixelCommand, RelativeSource={RelativeSource Mode=FindAncestor, 
+                                AncestorType={x:Type Window}}}"
+                    CommandParameter="{Binding}">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Rectangle Margin=".5,.5,.5,.5">
+                            <Rectangle.Fill>
+                                <SolidColorBrush Color="{Binding PixelColor}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
         </DataTemplate>
     </Window.Resources>
     <Grid>
@@ -66,7 +75,7 @@
                 </Style>
             </ListBox.ItemContainerStyle>
         </ListBox>
-        <ItemsControl ItemsSource="{Binding CurrentGraphic.PixelData}" Margin="125,0,67,40">
+        <ItemsControl ItemsSource="{Binding Path=SelectedGraphicPixelData}" Margin="125,0,117,40">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="1" />
@@ -77,12 +86,17 @@
                     <ItemsControl ItemsSource="{Binding}" ItemTemplate="{StaticResource pixelTemplate}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <UniformGrid Rows="1" /> 
+                                <UniformGrid Rows="1" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        <Button Content="New" Command="{Binding NewCommand}" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75"/>
+        <Button Content="Save" Command="{Binding SaveCommand}" Margin="0,37,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" />
+        <Button Content="Delete" Command="{Binding DeleteCommand}" HorizontalAlignment="Right" Margin="0,0,10,45" Width="75" Height="22" VerticalAlignment="Bottom"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Right" Height="23" Margin="0,90,10,0" TextWrapping="Wrap" Text="{Binding Path=CurrentGraphic.FileName}" VerticalAlignment="Top" Width="75"/>
+        <Label x:Name="label" Content="Name:" HorizontalAlignment="Left" Margin="752,64,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

@@ -38,15 +38,5 @@ namespace SignProgrammer.View
                 messageBox.CaretIndex = value;
             }
         }
-
-            /*
-            
-
-    private void newGraphicButton_Click(object sender, RoutedEventArgs e)
-    {
-       List<Graphic> graphics = sign.Effects.OfType<Graphic>().ToList();
-       Window w = new GraphicEditor(graphics);
-       w.ShowDialog();
-    }*/
-        }
+    }
 }
