@@ -10,21 +10,20 @@
     <Window.DataContext>
         <vm:MainWindowVM />
     </Window.DataContext>
-    <Grid>
-        <Menu VerticalAlignment="Top" IsMainMenu="True">
-            <MenuItem Header="F_ont" Name="fontMenu"/>
-            <MenuItem Header="_Transition" Name="transitionMenu"/>
-            <MenuItem ItemsSource="{Binding Path=CurrentSign.Effects[Color]}" Header="_Color" Name="colorMenu">
-                <MenuItem.ItemContainerStyle>
-                    <Style TargetType="MenuItem">
-                        <Setter Property="Header" Value="{Binding Path=MenuText}" />
-                        <Setter Property="Command"  
+    <Window.Resources>
+        <Style x:Key="EffectItemStyleKey" TargetType="MenuItem">
+            <Setter Property="Header" Value="{Binding Path=MenuText}" />
+            <Setter Property="Command"  
                                 Value="{Binding DataContext.EffectCommand, RelativeSource={RelativeSource Mode=FindAncestor, 
                                 AncestorType={x:Type MenuItem}, AncestorLevel=1}}" />
-                        <Setter Property="CommandParameter" Value="{Binding}" />
-                    </Style>
-                </MenuItem.ItemContainerStyle>
-            </MenuItem>
+            <Setter Property="CommandParameter" Value="{Binding}" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Menu VerticalAlignment="Top" IsMainMenu="True">
+            <MenuItem ItemContainerStyle="{StaticResource EffectItemStyleKey}" ItemsSource="{Binding Path=CurrentSign.Effects[Font]}" Header="F_ont" Name="fontMenu" />
+            <MenuItem ItemContainerStyle="{StaticResource EffectItemStyleKey}" ItemsSource="{Binding Path=CurrentSign.Effects[Transition]}" Header="_Transition" Name="transitionMenu" />
+            <MenuItem ItemContainerStyle="{StaticResource EffectItemStyleKey}" ItemsSource="{Binding Path=CurrentSign.Effects[Color]}" Header="_Color" Name="colorMenu" />
             <MenuItem ItemsSource="{Binding Path=CurrentSign.Effects[Graphic]}" Header="_Graphic" Name="graphicMenu">
                 <MenuItem.Resources>
                     <Image x:Key="iconKey" x:Shared="false" Margin="-10,0,0,0" Width="36" Height="14" Source="{Binding Path=Thumbnail}"/>
@@ -40,7 +39,7 @@
                     </Style>
                 </MenuItem.ItemContainerStyle>
             </MenuItem>
-            <MenuItem Header="_Special" Name="specialMenu"/>
+            <MenuItem ItemContainerStyle="{StaticResource EffectItemStyleKey}" ItemsSource="{Binding Path=CurrentSign.Effects[Special]}" Header="_Special" Name="specialMenu"/>
         </Menu>
         <Label x:Name="label" Content="Speed" Margin="0,71,110,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="43"/>
         <Slider x:Name="speedSlider" Value="{Binding Path=CurrentSpeed}" Margin="0,74,10,0" VerticalAlignment="Top" Maximum="25" SmallChange="5" HorizontalAlignment="Right" Width="95" TickPlacement="BottomRight" TickFrequency="5" IsHitTestVisible="True" IsSnapToTickEnabled="True" LargeChange="5"/>

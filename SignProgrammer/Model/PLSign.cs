@@ -14,8 +14,9 @@ namespace SignProgrammer.Model
         ? =
         B - graphic, 
         C - color
-        E - ??
-        S - ??
+        E - european font
+        F - u=magic 
+        S - font
         */
 
         
@@ -180,6 +181,19 @@ namespace SignProgrammer.Model
         {
             List<SignEffect> effects = new List<SignEffect>()
             {
+                new SignEffect("4x7", "{F:4x7}", "<SJ>", SignEffect.SignEffectType.Font),
+                new SignEffect("5x7", "{F:5x7}", "<SI>", SignEffect.SignEffectType.Font),
+
+                new SignEffect("Normal", "{F:norm}", "<SA>", SignEffect.SignEffectType.Font),
+                new SignEffect("Bold", "{F:bold}", "<SB>", SignEffect.SignEffectType.Font),
+                new SignEffect("Italic", "{F:italic}", "<SC>", SignEffect.SignEffectType.Font),
+                new SignEffect("Bold/Italic", "{F:B/I}", "<SD>", SignEffect.SignEffectType.Font),
+
+
+                new SignEffect("Flash Normal", "{F:flash}", "<SE>", SignEffect.SignEffectType.Font),
+                new SignEffect("Flash Bold", "{F:flash bold}", "<SF>", SignEffect.SignEffectType.Font),
+                new SignEffect("Flash Italic", "{F:flash italic}", "<SG>", SignEffect.SignEffectType.Font),
+                new SignEffect("Flash Bold Italic", "{F:flash B/I}", "<SH>", SignEffect.SignEffectType.Font),
             };
 
             return effects;
