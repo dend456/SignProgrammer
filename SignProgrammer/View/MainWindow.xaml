@@ -14,8 +14,8 @@
         <Style x:Key="EffectItemStyleKey" TargetType="MenuItem">
             <Setter Property="Header" Value="{Binding Path=MenuText}" />
             <Setter Property="Command"  
-                                Value="{Binding DataContext.EffectCommand, RelativeSource={RelativeSource Mode=FindAncestor, 
-                                AncestorType={x:Type MenuItem}, AncestorLevel=1}}" />
+                      Value="{Binding DataContext.EffectCommand, RelativeSource={RelativeSource Mode=FindAncestor, 
+                      AncestorType={x:Type MenuItem}, AncestorLevel=1}}" />
             <Setter Property="CommandParameter" Value="{Binding}" />
         </Style>
     </Window.Resources>

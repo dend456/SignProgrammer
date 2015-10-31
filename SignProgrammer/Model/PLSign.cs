@@ -15,7 +15,7 @@ namespace SignProgrammer.Model
         B - graphic, 
         C - color
         E - european font
-        F - u=magic 
+        F - transition / special
         S - font
         */
 
@@ -165,6 +165,17 @@ namespace SignProgrammer.Model
         {
             List<SignEffect> effects = new List<SignEffect>()
             {
+                new SignEffect("Open", "{T:open}", "<FB>", SignEffect.SignEffectType.Transition),
+                new SignEffect("Cover", "{T:cover}", "<FC>", SignEffect.SignEffectType.Transition),
+                new SignEffect("Close Left", "{T:cl}", "<FF>", SignEffect.SignEffectType.Transition),
+                new SignEffect("Close Right", "{T:cr}", "<FG>", SignEffect.SignEffectType.Transition),
+                new SignEffect("Close Center", "{T:cc}", "<FH>", SignEffect.SignEffectType.Transition),
+                new SignEffect("Scroll Up", "{T:su}", "<FI>", SignEffect.SignEffectType.Transition),
+                new SignEffect("Scroll Down", "{T:sd}", "<FJ>", SignEffect.SignEffectType.Transition),
+                new SignEffect("Overlap", "{T:overlap}", "<FK>", SignEffect.SignEffectType.Transition),
+                new SignEffect("Stack", "{T:stack}", "<FL>",  SignEffect.SignEffectType.Transition),
+                new SignEffect("Appear", "{T:appear}", "<FQ>", SignEffect.SignEffectType.Transition),
+                new SignEffect("Shift (normal)", "{T:shift}", "<FS>", SignEffect.SignEffectType.Transition)
             };
 
             return effects;
@@ -173,6 +184,18 @@ namespace SignProgrammer.Model
         {
             List<SignEffect> effects = new List<SignEffect>()
             {
+                new SignEffect("Random", "{S:random}", "<FA>", SignEffect.SignEffectType.Special),
+                new SignEffect("Dots", "{S:dots}", "<FR>", SignEffect.SignEffectType.Special),
+                new SignEffect("Date", "{S:date}", "<FD>", SignEffect.SignEffectType.Special),
+                new SignEffect("Cycle", "{S:cylce}", "<FE>", SignEffect.SignEffectType.Special),
+                new SignEffect("Comic 1", "{S:comic1}", "<FM>", SignEffect.SignEffectType.Special),
+                new SignEffect("Comic 2", "{S:comic2}", "<FN>", SignEffect.SignEffectType.Special),
+                new SignEffect("Beep", "{S:beep}", "<FO>", SignEffect.SignEffectType.Special),
+                new SignEffect("Pause (1 sec.)", "{S:pause}", "<FP>", SignEffect.SignEffectType.Special),
+                new SignEffect("Time", "{S:time}", "<FT>", SignEffect.SignEffectType.Special),
+                new SignEffect("Random Color", "{S:random color}", "<FU>", SignEffect.SignEffectType.Special),
+                new SignEffect("Thank You", "{S:thanks}", "<FV>", SignEffect.SignEffectType.Special),
+                new SignEffect("Welcome", "{S:welcome}", "<FW>", SignEffect.SignEffectType.Special)
             };
 
             return effects;
@@ -188,7 +211,6 @@ namespace SignProgrammer.Model
                 new SignEffect("Bold", "{F:bold}", "<SB>", SignEffect.SignEffectType.Font),
                 new SignEffect("Italic", "{F:italic}", "<SC>", SignEffect.SignEffectType.Font),
                 new SignEffect("Bold/Italic", "{F:B/I}", "<SD>", SignEffect.SignEffectType.Font),
-
 
                 new SignEffect("Flash Normal", "{F:flash}", "<SE>", SignEffect.SignEffectType.Font),
                 new SignEffect("Flash Bold", "{F:flash bold}", "<SF>", SignEffect.SignEffectType.Font),
