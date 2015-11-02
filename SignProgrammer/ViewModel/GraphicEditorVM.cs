@@ -162,7 +162,7 @@ namespace SignProgrammer.ViewModel
 
             DeleteCommand = new RelayCommand(() =>
             {
-            });
+            }); 
         }
     }
 }

@@ -79,5 +79,8 @@
                 <Button Content="G+" Command="{Binding NewGraphicCommand}"/>
             </ToolBar>
         </ToolBarTray>
+        <ComboBox ItemsSource="{Binding OpenComPorts}" SelectedValue="{Binding Path=SelectedComPort}" HorizontalAlignment="Left" Margin="180,73,0,0" VerticalAlignment="Top" Width="72"/>
+        <Label x:Name="label2" Content="COM Port:" HorizontalAlignment="Left" Margin="110,70,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="button" Content="⟳" HorizontalAlignment="Left" Margin="257,73,0,0" VerticalAlignment="Top" Width="25" RenderTransformOrigin="0.33,-0.022" FontSize="16" Height="22" FontFamily="Arial"/>
     </Grid>
 </Window>

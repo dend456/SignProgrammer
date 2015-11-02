@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.CommandWpf;
 using SignProgrammer.Model;
 using SignProgrammer.View;
 using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace SignProgrammer.ViewModel
@@ -10,7 +11,22 @@ namespace SignProgrammer.ViewModel
 
     public class MainWindowVM : ViewModelBase
     {
-        public Sign CurrentSign { get; set; } = new PLSign();
+        Sign currentSign;
+        public Sign CurrentSign
+        {
+            get
+            {
+                return currentSign;
+            }
+            set
+            {
+                currentSign = value;
+                OpenComPorts = SerialSign.OpenComPorts();
+                RaisePropertyChanged("");
+            }
+        }
+        
+        public List<string> OpenComPorts { get; private set; }
 
         private string msg = "";
         public string MessageText 
@@ -34,18 +50,35 @@ namespace SignProgrammer.ViewModel
             {
                 currentSpeed = value;
                 CurrentSign.SetSpeed(value);
-            } 
+            }
+        }
+
+        private string selectedComPort = "";
+        public string SelectedComPort
+        {
+            get
+            {
+                return selectedComPort;
+            }
+            set
+            {
+                selectedComPort = value;
+                ((SerialSign)CurrentSign).Port = value;
+            }
         }
 
         public string SelectedPage { get; set; } = "A";
         public ICommand EffectCommand { get; private set; }
         public ICommand SendMessageCommand { get; private set; }
         public ICommand NewGraphicCommand { get; private set; }
+        public ICommand RefreshComPortsCommand { get; private set; }
 
         public MainWindow Window { get; set; }
 
         public MainWindowVM()
         {
+            CurrentSign = new PLSign();
+
             EffectCommand = new RelayCommand<SignEffect>(s =>
             {
                 int oldIndex = Window.MessageBoxCaretIndex;
@@ -67,6 +100,12 @@ namespace SignProgrammer.ViewModel
                 GraphicEditorVM vm = window.DataContext as GraphicEditorVM;
                 vm.CurrentSign = CurrentSign;
                 window.Show();
+            }); 
+            
+            RefreshComPortsCommand = new RelayCommand(() =>
+            {
+                OpenComPorts = SerialSign.OpenComPorts();
+                RaisePropertyChanged("");
             });
         }
     }
