@@ -44,7 +44,7 @@
         <Label x:Name="label" Content="Speed" Margin="0,71,110,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="43"/>
         <Slider x:Name="speedSlider" Value="{Binding Path=CurrentSpeed}" Margin="0,74,10,0" VerticalAlignment="Top" Maximum="25" SmallChange="5" HorizontalAlignment="Right" Width="95" TickPlacement="BottomRight" TickFrequency="5" IsHitTestVisible="True" IsSnapToTickEnabled="True" LargeChange="5"/>
         <Button x:Name="sendButton" Command="{Binding SendMessageCommand}" Content="Send" Margin="0,0,10,10" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" />
-        <TextBox x:Name="messageBox" Text="{Binding Path=MessageText, UpdateSourceTrigger=PropertyChanged}" Height="126" Margin="10,100,10,0" TextWrapping="Wrap" VerticalAlignment="Top" AcceptsReturn="True" AcceptsTab="True" SpellCheck.IsEnabled="True" />
+        <TextBox x:Name="messageBox" Text="{Binding Path=MessageText, UpdateSourceTrigger=PropertyChanged}" Margin="10,100,10,37" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" SpellCheck.IsEnabled="True" />
         <Label x:Name="label1" Content="Page:" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Width="43"/>
         <ComboBox SelectedValue="{Binding Path=SelectedPage}" SelectedValuePath="Content" HorizontalAlignment="Left" Margin="53,73,0,0" VerticalAlignment="Top" Width="36" SelectedIndex="0">
             <ComboBoxItem>A</ComboBoxItem>

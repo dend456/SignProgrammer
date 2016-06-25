@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\dan\Documents\Visual Studio 2015\Projects\SignProgrammer\SignProgrammer\obj\Debug\
+C:\Users\dan\Documents\Visual Studio 2015\Projects\SignProgrammer\SignProgrammer\obj\Release\
 SignProgrammer
 none
 false
-DEBUG;TRACE
+TRACE
 C:\Users\dan\Documents\Visual Studio 2015\Projects\SignProgrammer\SignProgrammer\App.xaml
 3-1930556884
 
-16-1453580444
+20-930656967
 70-1524928871
 View\GraphicEditor.xaml;View\GraphicEditorControl.xaml;View\MainWindow.xaml;
 
-False
+True
 
