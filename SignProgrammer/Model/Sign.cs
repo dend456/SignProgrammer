@@ -16,6 +16,7 @@ namespace SignProgrammer.Model
         public abstract bool SendMessage(string msg, string page);
         public abstract bool SetSpeed(int speed);
         public abstract void AddGraphic(Graphic g);
+        public abstract void RemoveGraphic(Graphic g);
 
         protected virtual Dictionary<string, List<SignEffect>> LoadEffects() 
         {

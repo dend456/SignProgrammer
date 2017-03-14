@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows;
 
 namespace SignProgrammer.ViewModel
 {
@@ -21,6 +22,8 @@ namespace SignProgrammer.ViewModel
             public int Y { get; set; }
             public Color PixelColor { get; set; }
         }
+
+        public MainWindowVM MainWindow { get; set; }
 
         private Sign currentSign;
         public Sign CurrentSign 
@@ -47,7 +50,7 @@ namespace SignProgrammer.ViewModel
             set
             {
                 currentGraphic = value;
-                isNewGraphic = false;
+                isNewGraphic = (string.IsNullOrEmpty(currentGraphic.FilePath)) ? true : false;
                 var colors = currentGraphic.PixelData;
                 var pixels = new Pixel[colors.Length][];
                 int xPos = 0;
@@ -147,13 +150,22 @@ namespace SignProgrammer.ViewModel
                     }
                 }
                 currentGraphic.Data = string.Concat(chars);
-                currentGraphic.Save();
+
+                var suc = currentGraphic.Save();
+                if (!suc)
+                {
+                    MessageBox.Show(string.Format("Error saving file {0}.", currentGraphic.FilePath), "Error");
+                    return;
+                }
+
                 if (isNewGraphic)
                 {
                     currentSign.AddGraphic(currentGraphic);
                 }
+
                 isNewGraphic = false;
                 RaisePropertyChanged("");
+                MainWindow.refreshGraphics();
             });
 
             ResetCommand = new RelayCommand(() =>
@@ -162,6 +174,26 @@ namespace SignProgrammer.ViewModel
 
             DeleteCommand = new RelayCommand(() =>
             {
+                if (!isNewGraphic)
+                {
+                    var ans = MessageBox.Show(string.Format("Are you sure you want to delete {0}?", currentGraphic.FileName), "Confirm", MessageBoxButton.YesNo);
+                    if (ans == MessageBoxResult.No)
+                    {
+                        return;
+                    }
+
+                    var suc = currentGraphic.Delete();
+                    if (!suc)
+                    {
+                        MessageBox.Show(string.Format("Error deleting file {0}.", currentGraphic.FilePath), "Error");
+                        return;
+                    }
+                }
+
+                currentSign.RemoveGraphic(CurrentGraphic);
+                NewCommand.Execute(null);
+                RaisePropertyChanged("");
+                MainWindow.refreshGraphics();
             }); 
         }
     }

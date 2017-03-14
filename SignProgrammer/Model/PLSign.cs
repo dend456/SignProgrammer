@@ -109,6 +109,11 @@ namespace SignProgrammer.Model
             Effects["Graphic"].Add(g);
         }
 
+        public override void RemoveGraphic(Graphic g)
+        {
+            Effects["Graphic"].Remove(g);
+        }
+
         protected override Dictionary<string, List<SignEffect>> LoadEffects()
         {
             return new Dictionary<string, List<SignEffect>>()

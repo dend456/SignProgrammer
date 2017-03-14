@@ -114,9 +114,23 @@ namespace SignProgrammer.Model
 
             try
             {
+                Directory.CreateDirectory("graphics");
                 File.WriteAllLines(FilePath, lines);
             }
             catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool Delete()
+        {
+            try
+            {
+                File.Delete(FilePath);
+            }
+            catch(Exception)
             {
                 return false;
             }

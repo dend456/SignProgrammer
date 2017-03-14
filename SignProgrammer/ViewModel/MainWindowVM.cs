@@ -74,6 +74,7 @@ namespace SignProgrammer.ViewModel
         public ICommand RefreshComPortsCommand { get; private set; }
 
         public MainWindow Window { get; set; }
+        private GraphicEditor graphicsWindow;
 
         public MainWindowVM()
         {
@@ -96,10 +97,11 @@ namespace SignProgrammer.ViewModel
 
             NewGraphicCommand = new RelayCommand(() =>
             {
-                GraphicEditor window = new GraphicEditor();
-                GraphicEditorVM vm = window.DataContext as GraphicEditorVM;
+                graphicsWindow = new GraphicEditor();
+                GraphicEditorVM vm = graphicsWindow.DataContext as GraphicEditorVM;
                 vm.CurrentSign = CurrentSign;
-                window.Show();
+                vm.MainWindow = this;
+                graphicsWindow.Show();
             }); 
             
             RefreshComPortsCommand = new RelayCommand(() =>
@@ -107,6 +109,12 @@ namespace SignProgrammer.ViewModel
                 OpenComPorts = SerialSign.OpenComPorts();
                 RaisePropertyChanged("");
             });
+        }
+
+        public void refreshGraphics()
+        {
+            graphicsWindow.Close();
+            NewGraphicCommand.Execute(null);
         }
     }
 }
